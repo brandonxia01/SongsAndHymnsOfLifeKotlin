@@ -1,0 +1,65 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:1625050619370297959",
+      "lastPropertyId": "4:6589940651080513978",
+      "name": "Song",
+      "properties": [
+        {
+          "id": "1:959391057324424572",
+          "name": "id"
+        },
+        {
+          "id": "2:2646088989905564265",
+          "name": "title"
+        },
+        {
+          "id": "3:4050764930101469233",
+          "name": "trackNumber"
+        },
+        {
+          "id": "4:6589940651080513978",
+          "name": "language"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:7128303689296707279",
+          "name": "categories"
+        }
+      ]
+    },
+    {
+      "id": "2:8854307334176132169",
+      "lastPropertyId": "3:6022897399332550689",
+      "name": "Category",
+      "properties": [
+        {
+          "id": "1:6417859628097920493",
+          "name": "id"
+        },
+        {
+          "id": "3:6022897399332550689",
+          "name": "categoryTitle"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:8854307334176132169",
+  "lastIndexId": "0:0",
+  "lastRelationId": "1:7128303689296707279",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    7879063767726066963
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}
