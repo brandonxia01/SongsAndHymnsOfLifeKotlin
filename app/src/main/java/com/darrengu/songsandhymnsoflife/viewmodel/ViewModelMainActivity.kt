@@ -1,7 +1,10 @@
 package com.darrengu.songsandhymnsoflife.viewmodel
 
+import android.app.Activity
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProviders
+import android.support.v4.app.FragmentActivity
 import com.darrengu.songsandhymnsoflife.model.Song
 import com.darrengu.songsandhymnsoflife.repository.DataRepository
 
@@ -13,7 +16,11 @@ class ViewModelMainActivity : ViewModel() {
 
     val allSongs = MutableLiveData<List<Song>>()
     val songInSearch = MutableLiveData<List<Song>>()
-    val songNumber = MutableLiveData<Song>()
+    val songNumber = MutableLiveData<List<Song>>()
+
+    companion object {
+        fun newInstance(activity: FragmentActivity) = ViewModelProviders.of(activity)[ViewModelMainActivity::class.java]
+    }
 
     fun getAllSongs() {
         allSongs.value = repository.getAllSongs()
@@ -23,7 +30,7 @@ class ViewModelMainActivity : ViewModel() {
         songInSearch.value = repository.search(keyword)
     }
 
-    fun findSongByTrack(trackNumber: Long) {
+    fun findSongByTrack(trackNumber: String) {
         songNumber.value = repository.findSongByTrack(trackNumber)
     }
 }

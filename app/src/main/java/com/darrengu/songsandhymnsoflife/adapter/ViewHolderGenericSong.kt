@@ -9,9 +9,16 @@ import kotlinx.android.synthetic.main.adapter_item_song.*
 /**
  * Created by darren.gu on 3/5/18.
  */
-class ViewHolderGenericSong(override val containerView: View?) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+class ViewHolderGenericSong(override val containerView: View, private val onClickSong: (Long) -> Unit)
+    : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    var displayingSong: Song? = null
+
+    init {
+        containerView.setOnClickListener { displayingSong?.id?.let { onClickSong(it) }}
+    }
     fun bind(song: Song) {
-        songTrack.text = song.trackNumber.toString()
+        displayingSong = song
+        songTrack.text = song.trackNumber
         songTitle.text = song.title
     }
 }

@@ -1,7 +1,6 @@
 package com.darrengu.songsandhymnsoflife.fragment
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -17,17 +16,9 @@ import kotlinx.android.synthetic.main.fragment_songlist.*
 /**
  * Created by darren.gu on 3/4/18.
  */
-class FragSongList : Fragment() {
+class FragSongList : BaseFragmentMainActivity() {
     companion object {
         val TAG = FragSongList::class.java.simpleName
-    }
-
-    private lateinit var sharedModelMainActivity: ViewModelMainActivity
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedModelMainActivity = ViewModelProviders.of(activity!!)[ViewModelMainActivity::class.java]
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,15 +26,15 @@ class FragSongList : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = AdapterGenericRecyclerSong()
+        val adapter = AdapterGenericRecyclerSong(startScoreActivity)
         allSongsList.layoutManager = LinearLayoutManager(context)
         allSongsList.adapter = adapter
-        sharedModelMainActivity.allSongs.observe(this, Observer { allSongs: List<Song>? ->
+        viewModel.allSongs.observe(this, Observer { allSongs: List<Song>? ->
             run {
                 adapter.dataSet.clear()
                 allSongs?.let { adapter.dataSet = it.toMutableList() }
             }
         })
-        sharedModelMainActivity.getAllSongs()
+        viewModel.getAllSongs()
     }
 }

@@ -22,13 +22,9 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener { item ->
             val fragment: Fragment =
                     when (item.itemId) {
-
                         R.id.navigation_number -> fragNumber
-
                         R.id.navigation_search -> fragSearch
-
                         R.id.navigation_list -> fragSongList
-
                         else -> fragSongList
                     }
             supportFragmentManager.beginTransaction()

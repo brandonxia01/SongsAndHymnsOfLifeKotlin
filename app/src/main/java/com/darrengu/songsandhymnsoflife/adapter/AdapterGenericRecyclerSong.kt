@@ -9,7 +9,7 @@ import com.darrengu.songsandhymnsoflife.model.Song
 /**
  * Created by darren.gu on 3/5/18.
  */
-class AdapterGenericRecyclerSong : RecyclerView.Adapter<ViewHolderGenericSong>() {
+class AdapterGenericRecyclerSong(private val onClickSong: (Long) -> Unit) : RecyclerView.Adapter<ViewHolderGenericSong>() {
     var dataSet: MutableList<Song> = mutableListOf()
         set(value) {
             field = value
@@ -18,7 +18,7 @@ class AdapterGenericRecyclerSong : RecyclerView.Adapter<ViewHolderGenericSong>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderGenericSong {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.adapter_item_song, parent, false)
-        return ViewHolderGenericSong(itemView)
+        return ViewHolderGenericSong(itemView, onClickSong)
     }
 
     override fun getItemCount(): Int = dataSet.size
