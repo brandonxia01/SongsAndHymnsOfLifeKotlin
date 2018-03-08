@@ -35,10 +35,12 @@ class FragNumber : BaseFragmentMainActivity() {
         previewList.layoutManager = LinearLayoutManager(context)
         val adapter = AdapterGenericRecyclerSong(startScoreActivity)
         previewList.adapter = adapter
-        viewModel.songNumber.observe(this, Observer { previewSongs -> previewSongs?.let {
-            summaryText.text = "${it.size} songs in total"
-            adapter.dataSet = it.toMutableList()
-        }})
+        viewModel.songNumber.observe(this, Observer { previewSongs ->
+            previewSongs?.let {
+                summaryText.text = "${it.size} songs in total"
+                adapter.dataSet = it.toMutableList()
+            }
+        })
         disposable = Observable.mergeArray(RxView.clicks(num1).map { "1" },
                 RxView.clicks(num2).map { "2" },
                 RxView.clicks(num3).map { "3" },
@@ -49,14 +51,26 @@ class FragNumber : BaseFragmentMainActivity() {
                 RxView.clicks(num8).map { "8" },
                 RxView.clicks(num9).map { "9" },
                 RxView.clicks(num0).map { "0" },
-                RxView.clicks(backspace).map { "" })
-                .scan(savedInput, { t1, t2 -> if (t2 == "" && t1.isNotEmpty()) t1.dropLast(1) else t1.plus(t2) })
+                RxView.clicks(backspace).map { "back" })
+                .scan(savedInput, { t1, t2 ->
+                    var result = t1
+                    if (t2 == "back") {
+                        if (t1.isNotEmpty()) result = t1.dropLast(1) //delete a character if not empty
+                    } else {
+                        if (t2 == "0") {
+                            if (t1.isNotEmpty() && t1.length < 4) result = t1.plus(t2) //0 cannot be the prefix of inputs
+                        } else if (t1.length < 4) {
+                            result = t1.plus(t2)
+                        }
+                    }
+                    result
+                })
                 .doOnNext {
                     inputText.text = it
                     summaryText.text = ""
-                    adapter.dataSet = mutableListOf()
+                    viewModel.songNumber.value = mutableListOf()
                 }
-                .filter { it.isNotEmpty() }
+                .filter { it.isNotEmpty() && (it.toInt() in 1..9999) }
                 .subscribe {
                     viewModel.findSongByTrack(it)
                 }
@@ -64,7 +78,7 @@ class FragNumber : BaseFragmentMainActivity() {
         enter.setOnClickListener {
             val song = viewModel.songNumber.value
             when (song?.size) {
-                0 -> context?.toast("can't find any songs")
+                0, null -> context?.toast("can't find any songs")
                 1 -> startScoreActivity(song[0].id)
                 else -> context?.toast("too many options")
             }

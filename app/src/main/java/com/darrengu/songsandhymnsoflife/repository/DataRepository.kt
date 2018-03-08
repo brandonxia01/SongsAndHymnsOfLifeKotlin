@@ -24,12 +24,20 @@ class DataRepository {
         if (!imported) {
             val songs = mutableListOf<Song>()
             val categories = mutableListOf<Category>()
+            val subCategories = mutableListOf<Category>()
+            val random = Random()
+
+            for (subIndex in 0..5) {
+                val subCategory = Category(categoryTitle = "subCategory$subIndex", isSub = true)
+                subCategories.add(subCategory)
+            }
+            categoryBox.put(subCategories)
             for (index in 0..10) {
-                val category = Category(categoryTitle = "category$index")
+                val category = Category(categoryTitle = "category$index", isSub = false)
+                category.subCategory.add(subCategories[random.nextInt(6)])
                 categories.add(category)
             }
             categoryBox.put(categories)
-            val random = Random()
             for (index in 0..575) {
                 val song = Song(trackNumber = (index + 1).toString(), title = "title$index")
                 song.categories.add(categories[random.nextInt(11)])
