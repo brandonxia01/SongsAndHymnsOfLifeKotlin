@@ -34,6 +34,8 @@ class DataRepository {
                 val song = Song(trackNumber = (index + 1).toString(), title = "title$index")
                 song.categories.add(categories[random.nextInt(11)])
                 song.categories.add(categories[random.nextInt(11)])
+                val postfix = String.format("%04d", index)
+                song.url = "http://shengmingshige.net/blog/wp-content/gallery/c-png/cu-$postfix.png"
                 songs.add(song)
             }
             songBox.put(songs)
@@ -46,4 +48,6 @@ class DataRepository {
     fun getAllSongs(): List<Song> = songBox.all
 
     fun findSongByTrack(track: String): List<Song> = songBox.query().startsWith(Song_.trackNumber, track).build().find()
+
+    fun findSongById(songId: Long): Song? = songBox.query().equal(Song_.id, songId).build().findFirst()
 }

@@ -11,11 +11,10 @@ import org.jetbrains.anko.startActivity
  */
 open class BaseFragmentMainActivity : Fragment() {
     protected lateinit var viewModel: ViewModelMainActivity
-    val startScoreActivity = { songId: Long -> context?.startActivity<ScoreActivity>("songId" to songId) ?: Unit}
+    val startScoreActivity = { songId: Long -> context?.startActivity<ScoreActivity>(FragViewer.SONG_ID to songId) ?: Unit}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelMainActivity.newInstance(activity!!)
-
     }
 }

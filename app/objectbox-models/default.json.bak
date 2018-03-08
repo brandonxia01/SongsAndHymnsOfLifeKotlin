@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:1625050619370297959",
-      "lastPropertyId": "3:4050764930101469233",
+      "lastPropertyId": "4:6589940651080513978",
       "name": "Song",
       "properties": [
         {
@@ -19,6 +19,10 @@
         {
           "id": "3:4050764930101469233",
           "name": "trackNumber"
+        },
+        {
+          "id": "4:6589940651080513978",
+          "name": "language"
         }
       ],
       "relations": [
