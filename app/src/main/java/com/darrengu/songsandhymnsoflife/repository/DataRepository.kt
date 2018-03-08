@@ -47,7 +47,7 @@ class DataRepository {
 
     fun getAllSongs(sortByNumber: Boolean): List<Song> {
         return if (sortByNumber) {
-            songBox.query().order(Song_.trackNumber).build().find()
+            songBox.query().sort { song1, song2 -> song1.trackNumber.toInt().compareTo(song2.trackNumber.toInt()) }.build().find()
         } else {
             songBox.query().order(Song_.subIndex).order(Song_.trackNumber).build().find()
         }
