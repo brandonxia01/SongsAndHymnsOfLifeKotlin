@@ -14,6 +14,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_number.*
+import org.jetbrains.anko.toast
 
 /**
  * Created by darren.gu on 3/4/18.
@@ -34,7 +35,10 @@ class FragNumber : BaseFragmentMainActivity() {
         previewList.layoutManager = LinearLayoutManager(context)
         val adapter = AdapterGenericRecyclerSong(startScoreActivity)
         previewList.adapter = adapter
-        viewModel.songNumber.observe(this, Observer { previewSongs -> previewSongs?.let { adapter.dataSet = it.toMutableList() }})
+        viewModel.songNumber.observe(this, Observer { previewSongs -> previewSongs?.let {
+            summaryText.text = "${it.size} songs in total"
+            adapter.dataSet = it.toMutableList()
+        }})
         disposable = Observable.mergeArray(RxView.clicks(num1).map { "1" },
                 RxView.clicks(num2).map { "2" },
                 RxView.clicks(num3).map { "3" },
@@ -49,12 +53,22 @@ class FragNumber : BaseFragmentMainActivity() {
                 .scan(savedInput, { t1, t2 -> if (t2 == "" && t1.isNotEmpty()) t1.dropLast(1) else t1.plus(t2) })
                 .doOnNext {
                     inputText.text = it
+                    summaryText.text = ""
                     adapter.dataSet = mutableListOf()
                 }
                 .filter { it.isNotEmpty() }
                 .subscribe {
                     viewModel.findSongByTrack(it)
                 }
+
+        enter.setOnClickListener {
+            val song = viewModel.songNumber.value
+            when (song?.size) {
+                0 -> context?.toast("can't find any songs")
+                1 -> startScoreActivity(song[0].id)
+                else -> context?.toast("too many options")
+            }
+        }
     }
 
     override fun onPause() {

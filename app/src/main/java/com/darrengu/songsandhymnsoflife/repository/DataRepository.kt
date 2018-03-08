@@ -45,7 +45,13 @@ class DataRepository {
 
     fun search(keyword: String): List<Song> = songBox.query().contains(Song_.title, keyword).build().find()
 
-    fun getAllSongs(): List<Song> = songBox.all
+    fun getAllSongs(sortByNumber: Boolean): List<Song> {
+        return if (sortByNumber) {
+            songBox.query().order(Song_.trackNumber).build().find()
+        } else {
+            songBox.query().order(Song_.subIndex).order(Song_.trackNumber).build().find()
+        }
+    }
 
     fun findSongByTrack(track: String): List<Song> = songBox.query().startsWith(Song_.trackNumber, track).build().find()
 

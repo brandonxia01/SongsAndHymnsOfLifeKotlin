@@ -9,6 +9,6 @@ import io.objectbox.relation.ToMany
  */
 @Entity
 class Song(@Id var id: Long = 0, var trackNumber: String = "", var title: String = "",
-           var language: String = "English", var url: String = "") {
+           var language: String = "English", var url: String = "", var subIndex: String = "pinyin") {
     lateinit var categories: ToMany<Category>
 }

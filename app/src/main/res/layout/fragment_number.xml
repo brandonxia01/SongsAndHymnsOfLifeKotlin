@@ -7,22 +7,30 @@
 
     <TextView
         android:id="@+id/inputText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:textSize="56sp"
+        android:maxLength="5"
         android:gravity="center"
-        tools:text="123" />
+        tools:text="12345" />
+
+    <TextView
+        android:id="@+id/summaryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/inputText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        tools:text="129 songs in total"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/buttonContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:outlineProvider="bounds"
-        android:background="@android:color/white"
         android:elevation="4dp">
 
         <TextView

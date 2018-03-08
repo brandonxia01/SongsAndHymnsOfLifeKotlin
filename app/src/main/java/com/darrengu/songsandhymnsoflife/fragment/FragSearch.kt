@@ -38,11 +38,16 @@ class FragSearch : BaseFragmentMainActivity() {
         searchResults.layoutManager = LinearLayoutManager(context)
         searchResults.adapter = adapter
         viewModel.songInSearch.observe(this,
-                Observer { results: List<Song>? -> results?.let { adapter.dataSet = it.toMutableList() } })
+                Observer { results: List<Song>? -> results?.let {
+                    summaryText.text = "${it.size} songs in total"
+                    adapter.dataSet = it.toMutableList()
+                } })
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY)
         disposable = RxTextView.textChanges(searchInput)
-                .doOnNext { adapter.dataSet = mutableListOf() }
+                .doOnNext {
+                    summaryText.text = ""
+                    adapter.dataSet = mutableListOf() }
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .map { it.trim() }
                 .filter { it.isNotEmpty() }

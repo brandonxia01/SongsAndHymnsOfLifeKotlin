@@ -22,8 +22,8 @@ class ViewModelMainActivity : ViewModel() {
         fun newInstance(activity: FragmentActivity) = ViewModelProviders.of(activity)[ViewModelMainActivity::class.java]
     }
 
-    fun getAllSongs() {
-        allSongs.value = repository.getAllSongs()
+    fun getAllSongs(sortByNumber: Boolean) {
+        allSongs.value = repository.getAllSongs(sortByNumber)
     }
 
     fun search(keyword: String) {
