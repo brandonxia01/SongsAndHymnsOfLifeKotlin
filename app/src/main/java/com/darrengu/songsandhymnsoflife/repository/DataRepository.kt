@@ -61,7 +61,7 @@ class DataRepository {
         }
     }
 
-    fun findSongByTrack(track: String): List<Song> = songBox.query().startsWith(Song_.trackNumber, track).build().find()
+    fun findSongByTrack(track: String): List<Song> = songBox.query().startsWith(Song_.trackNumber, track).order(Song_.trackNumber).build().find()
 
     fun findSongById(songId: Long): Song? = songBox.query().equal(Song_.id, songId).build().findFirst()
 }

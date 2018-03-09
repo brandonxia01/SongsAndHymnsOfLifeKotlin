@@ -35,12 +35,10 @@ class FragNumber : BaseFragmentMainActivity() {
         previewList.layoutManager = LinearLayoutManager(context)
         val adapter = AdapterGenericRecyclerSong(startScoreActivity)
         previewList.adapter = adapter
-        viewModel.songNumber.observe(this, Observer { previewSongs ->
-            previewSongs?.let {
-                summaryText.text = "${it.size} songs in total"
-                adapter.dataSet = it.toMutableList()
-            }
-        })
+        viewModel.songNumber.observe(this, Observer { previewSongs -> previewSongs?.let {
+            summaryText.text = "${it.size} songs in total"
+            adapter.dataSet = it.toMutableList()
+        }})
         disposable = Observable.mergeArray(RxView.clicks(num1).map { "1" },
                 RxView.clicks(num2).map { "2" },
                 RxView.clicks(num3).map { "3" },
@@ -59,7 +57,7 @@ class FragNumber : BaseFragmentMainActivity() {
                     } else {
                         if (t2 == "0") {
                             if (t1.isNotEmpty() && t1.length < 4) result = t1.plus(t2) //0 cannot be the prefix of inputs
-                        } else if (t1.length < 4) {
+                        } else if (t1.length < 4){
                             result = t1.plus(t2)
                         }
                     }
@@ -70,7 +68,7 @@ class FragNumber : BaseFragmentMainActivity() {
                     summaryText.text = ""
                     viewModel.songNumber.value = mutableListOf()
                 }
-                .filter { it.isNotEmpty() && (it.toInt() in 1..9999) }
+                .filter { it.isNotEmpty() && (it.toInt() in 1..9999)}
                 .subscribe {
                     viewModel.findSongByTrack(it)
                 }
@@ -79,8 +77,7 @@ class FragNumber : BaseFragmentMainActivity() {
             val song = viewModel.songNumber.value
             when (song?.size) {
                 0, null -> context?.toast("can't find any songs")
-                1 -> startScoreActivity(song[0].id)
-                else -> context?.toast("too many options")
+                else -> startScoreActivity(song[0].id)
             }
         }
     }
