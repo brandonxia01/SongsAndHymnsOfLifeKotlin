@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_format_list_numbered_white_24dp_xml"
         android:title="@string/title_list" />
 
+    <item
+        android:id="@+id/navigation_category"
+        android:icon="@drawable/ic_format_list_numbered_white_24dp_xml"
+        android:title="Category"/>
+
 </menu>

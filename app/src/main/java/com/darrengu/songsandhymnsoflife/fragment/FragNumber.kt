@@ -77,7 +77,7 @@ class FragNumber : BaseFragmentMainActivity() {
             val song = viewModel.songNumber.value
             when (song?.size) {
                 0, null -> context?.toast("can't find any songs")
-                else -> startScoreActivity(song[0].id)
+                else -> startScoreActivity(song[0].songId)
             }
         }
     }

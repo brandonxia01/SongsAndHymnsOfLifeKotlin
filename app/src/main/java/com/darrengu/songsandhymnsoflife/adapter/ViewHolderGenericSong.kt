@@ -14,7 +14,7 @@ class ViewHolderGenericSong(override val containerView: View, private val onClic
     var displayingSong: Song? = null
 
     init {
-        containerView.setOnClickListener { displayingSong?.id?.let { onClickSong(it) }}
+        containerView.setOnClickListener { displayingSong?.songId?.let { onClickSong(it) }}
     }
     fun bind(song: Song) {
         displayingSong = song

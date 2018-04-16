@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.FragmentActivity
 import com.darrengu.songsandhymnsoflife.model.Song
 import com.darrengu.songsandhymnsoflife.repository.DataRepository
+import kotlinx.coroutines.experimental.launch
 
 /**
  * Created by darren.gu on 3/7/18.
@@ -18,7 +19,9 @@ class ViewModelScoreActivity : ViewModel() {
         fun newInstance(activity: FragmentActivity) = ViewModelProviders.of(activity)[ViewModelScoreActivity::class.java]
     }
 
-    fun findSongById(songId: Long) {
-        song.value = repository.findSongById(songId)
+    fun findSongById(songId: Int) {
+        launch {
+            song.value = repository.findSongById(songId)
+        }
     }
 }

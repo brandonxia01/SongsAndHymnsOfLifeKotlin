@@ -50,14 +50,19 @@ class FragSongList : BaseFragmentMainActivity() {
         inflater.inflate(R.menu.menu_sort, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (sortByNumber) {
-            item?.setIcon(R.drawable.ic_sort_by_alpha_white_24dp)
-        } else {
-            item?.setIcon(R.drawable.ic_format_list_numbered_white_24dp)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.sort -> {
+                if (sortByNumber) {
+                    item.setIcon(R.drawable.ic_sort_by_alpha_white_24dp)
+                } else {
+                    item.setIcon(R.drawable.ic_format_list_numbered_white_24dp)
+                }
+                sortByNumber = !sortByNumber
+                viewModel.getAllSongs(sortByNumber)
+            }
         }
-        sortByNumber = !sortByNumber
-        viewModel.getAllSongs(sortByNumber)
+
         return true
     }
 }

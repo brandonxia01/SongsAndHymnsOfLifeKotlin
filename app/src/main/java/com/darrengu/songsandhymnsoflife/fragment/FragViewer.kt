@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_viewer.*
 import org.jetbrains.anko.bundleOf
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
-import com.google.android.exoplayer2.trackselection.TrackSelection
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
@@ -27,10 +26,8 @@ import kotlinx.android.synthetic.main.custom_playback_control_view.*
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.os.Environment
 import android.util.Log
 import android.widget.ImageButton
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Target
 import java.io.File
 import java.io.FileOutputStream
@@ -51,7 +48,7 @@ class FragViewer : Fragment() {
     companion object {
         const val SONG_ID = "Song_Id"
 
-        fun newInstance(songId: Long): FragViewer = FragViewer().apply { arguments = bundleOf(SONG_ID to songId) }
+        fun newInstance(songId: Int): FragViewer = FragViewer().apply { arguments = bundleOf(SONG_ID to songId) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,11 +82,11 @@ class FragViewer : Fragment() {
         viewModel.song.observe(this, Observer {
             it?.let {
                 Picasso.get()
-                        .load(it.url)
+                        .load(it.urlScore)
                         .into(target)
 
-                if (it.lyrics.isNotEmpty()) {
-                    lyricsView.text = it.lyrics
+                it.lyrics?.let {
+                    lyricsView.text = it
                     flipButton.visibility = View.VISIBLE
                 }
 
@@ -130,7 +127,7 @@ class FragViewer : Fragment() {
             if (playerControlView.isVisible) playerControlView.hide() else playerControlView.show()
         }
 
-        arguments?.getLong(SONG_ID)?.let { viewModel.findSongById(it) }
+        arguments?.getInt(SONG_ID)?.let { viewModel.findSongById(it) }
     }
 
     private fun getLocalBitmapUri(context: Context, bmp: Bitmap): Uri? {
