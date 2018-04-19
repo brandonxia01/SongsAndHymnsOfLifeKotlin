@@ -37,7 +37,7 @@ class FragNumber : BaseFragmentMainActivity() {
         previewList.adapter = adapter
         viewModel.songNumber.observe(this, Observer { previewSongs -> previewSongs?.let {
             summaryText.text = "${it.size} songs in total"
-            adapter.dataSet = it.toMutableList()
+            adapter.submitList(it.toMutableList())
         }})
         disposable = Observable.mergeArray(RxView.clicks(num1).map { "1" },
                 RxView.clicks(num2).map { "2" },

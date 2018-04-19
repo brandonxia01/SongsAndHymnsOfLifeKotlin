@@ -30,12 +30,12 @@ class DataRepository {
                 val songs = mutableListOf<Song>()
                 val categories = mutableListOf<Category>()
 
-                categories.add(Category(100, 0L, "subCategory1001L", 1L))
-                categories.add(Category(200, 1L, "subCategory2001L", 1L))
-                categories.add(Category(300, 2L, "subCategory3002L", 2L))
-                categories.add(Category(400, 3L, "subCategory4003L", 2L))
-                categories.add(Category(400, 4L, "subCategory4004L", 2L))
-                categories.add(Category(500, 4L, "subCategory5004L", 2L))
+                categories.add(Category(100, "subCategory1001L", 1L))
+                categories.add(Category(200, "subCategory2001L", 1L))
+                categories.add(Category(300, "subCategory3002L", 2L))
+                categories.add(Category(400, "subCategory4003L", 2L))
+                //categories.add(Category(400, "subCategory4004L", 2L))
+                categories.add(Category(500, "subCategory5004L", 2L))
 
 
                 categories.add(Category(1L, categoryTitle = "MainTitle1", parentCategory = null))
@@ -52,6 +52,11 @@ class DataRepository {
                 }
                 dao.batchInsertSongs(songs)
 
+                val join1 = SongJoinCategory(0, 100)
+                val join2 = SongJoinCategory(1, 200)
+                val join3 = SongJoinCategory(2, 100)
+                val join4 = SongJoinCategory(2, 200)
+                dao.batchInsertSongCategoryRelations(listOf(join1, join2, join3, join4))
                 sharedPref.edit().putBoolean("IMPORTED", true).apply()
             }
         } catch (e: Throwable) {
@@ -60,23 +65,23 @@ class DataRepository {
 
     }
 
-    suspend fun search(keyword: String): List<Song> = async { dao.search("%$keyword%") }.await()
+    suspend fun search(keyword: String): List<Song> = async { dao.search("%$keyword%").distinctBy { it.songId } }.await()
 
     suspend fun getAllSongs(sortByNumber: Boolean): List<Song> {
         return async {
             if (sortByNumber) {
-                dao.getAllByTrackNumber()
+                dao.getAllByTrackNumber().distinctBy { it.songId }
             } else {
-                dao.getAllByAlphabeticalOrder()
+                dao.getAllByAlphabeticalOrder().distinctBy { it.songId }
             }
         }.await()
     }
 
-    suspend fun findSongByTrack(track: String): List<Song> = async { dao.findSongByTrack("$track%")}.await()
+    suspend fun findSongByTrack(track: String): List<Song> = async { dao.findSongByTrack("$track%").distinctBy { it.songId }}.await()
 
     suspend fun findSongById(songId: Int): Song? = async { dao.findSongById(songId) }.await()
 
     suspend fun findMainCategories(): List<Category> = async { dao.findMainCategories() }.await()
 
-    suspend fun findSongsInCategory(id: Long): List<SongWithCategories> = async { dao.findSongInCategory(id) }.await()
+    suspend fun findSongsInCategory(id: Long): List<CategoryWithSongs> = async { dao.findSongInCategory(id) }.await()
 }

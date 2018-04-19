@@ -37,11 +37,7 @@ class FragSongList : BaseFragmentMainActivity() {
         val adapter = AdapterGenericRecyclerSong(startScoreActivity)
         allSongsList.layoutManager = LinearLayoutManager(context)
         allSongsList.adapter = adapter
-        viewModel.allSongs.observe(this, Observer { allSongs: List<Song>? ->
-            run {
-                adapter.dataSet.clear()
-                allSongs?.let { adapter.dataSet = it.toMutableList() }
-            }
+        viewModel.allSongs.observe(this, Observer { allSongs: List<Song>? -> adapter.submitList(allSongs?.toMutableList())
         })
         viewModel.getAllSongs(true)
     }

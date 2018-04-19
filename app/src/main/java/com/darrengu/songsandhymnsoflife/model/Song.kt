@@ -11,6 +11,7 @@ import android.arch.persistence.room.PrimaryKey
 @Entity(tableName = "song")
 data class Song(
         @PrimaryKey()
+        @ColumnInfo(name = "song_id")
         var songId: Long,
         @ColumnInfo(name = "track_number")
         var trackNumber: String?,
