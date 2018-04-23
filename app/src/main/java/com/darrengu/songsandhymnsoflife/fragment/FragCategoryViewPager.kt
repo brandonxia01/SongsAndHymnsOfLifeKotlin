@@ -39,24 +39,17 @@ class FragCategoryViewPager : BaseFragmentMainActivity() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         categoryList.layoutManager = LinearLayoutManager(context)
-        categoryId?.let {
-            val categoriesWithSongs = viewModel.findSongsInCategory(it)
-            val flattenList = mutableListOf<Any>()
-            categoriesWithSongs?.map {
-                it.category?.let { flattenList.add(it) }
-                flattenList.addAll(it.songs)
+
+        viewModel.categories.observe(this, Observer {
+            it?.let {
+                categoryList.adapter = AdapterPagerCategory(it) {
+                    Log.d("onClickSong", it.toString())
+                }
             }
-            val adapter = AdapterPagerCategory(flattenList) {
-                Log.d("onClickSong", it.toString())
-            }
-            categoryList.adapter = adapter
-            Log.d("result", categoriesWithSongs?.size.toString())
-        }
+            Log.d("result", it?.size.toString())
+        })
+
+        categoryId?.let { viewModel.findSongsInCategory(it) }
+
     }
-
-
-
-
-
-
 }

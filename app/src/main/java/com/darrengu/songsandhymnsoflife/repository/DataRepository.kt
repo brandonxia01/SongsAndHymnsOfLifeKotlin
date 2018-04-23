@@ -52,10 +52,10 @@ class DataRepository {
                 }
                 dao.batchInsertSongs(songs)
 
-                val join1 = SongJoinCategory(0, 100)
-                val join2 = SongJoinCategory(1, 200)
-                val join3 = SongJoinCategory(2, 100)
-                val join4 = SongJoinCategory(2, 200)
+                val join1 = SongJoinCategory(0,0, 100)
+                val join2 = SongJoinCategory(1,1, 200)
+                val join3 = SongJoinCategory(2,2, 100)
+                val join4 = SongJoinCategory(3,2, 200)
                 dao.batchInsertSongCategoryRelations(listOf(join1, join2, join3, join4))
                 sharedPref.edit().putBoolean("IMPORTED", true).apply()
             }
@@ -83,5 +83,5 @@ class DataRepository {
 
     suspend fun findMainCategories(): List<Category> = async { dao.findMainCategories() }.await()
 
-    suspend fun findSongsInCategory(id: Long): List<CategoryWithSongs> = async { dao.findSongInCategory(id) }.await()
+    suspend fun findSongsInCategory(id: Long): List<SongCategory> = async { dao.findSongInCategory(id) }.await()
 }

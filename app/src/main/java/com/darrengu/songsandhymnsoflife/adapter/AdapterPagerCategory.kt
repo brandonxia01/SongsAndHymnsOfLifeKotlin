@@ -47,7 +47,7 @@ class AdapterPagerCategory(var dataset: List<Any>, private val onClickListener: 
             }
             else -> {
                 val viewHolder = holder as ViewHolderCategory
-                viewHolder.bind(dataset[position] as Category)
+                viewHolder.bind(dataset[position] as String)
             }
         }
     }

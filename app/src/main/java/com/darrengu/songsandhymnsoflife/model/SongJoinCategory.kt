@@ -14,7 +14,7 @@ import android.arch.persistence.room.*
                     childColumns = ["categoryId"])
         ])
 data class SongJoinCategory(
-        @PrimaryKey(autoGenerate = true)
+        @PrimaryKey()
         var joinId: Long,
         var songId: Long,
         var categoryId: Long)

@@ -24,7 +24,7 @@ interface SongDAO {
     fun findMainCategories(): List<Category>
 
     @Query("SELECT * FROM category JOIN song_join_category ON category_id=categoryId JOIN song ON song_id=songId WHERE parent_category=:categoryId")
-    fun findSongInCategory(categoryId: Long): List<CategoryWithSongs>
+    fun findSongInCategory(categoryId: Long): List<SongCategory>
 
     @Insert
     fun batchInsertSongs(allSongs: List<Song>)
