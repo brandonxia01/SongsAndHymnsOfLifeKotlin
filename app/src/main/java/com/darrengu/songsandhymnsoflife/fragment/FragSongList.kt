@@ -13,6 +13,7 @@ import com.darrengu.songsandhymnsoflife.R
 import com.darrengu.songsandhymnsoflife.adapter.AdapterGenericRecyclerSong
 import com.darrengu.songsandhymnsoflife.model.Song
 import com.darrengu.songsandhymnsoflife.viewmodel.ViewModelMainActivity
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 import kotlinx.android.synthetic.main.fragment_songlist.*
 import kotlinx.android.synthetic.main.fragment_songlist.view.*
 
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_songlist.view.*
  * Created by darren.gu on 3/4/18.
  */
 class FragSongList : BaseFragmentMainActivity() {
-    var sortByNumber = true
+    private var sortByNumber = true
 
     companion object {
         val TAG = FragSongList::class.java.simpleName
@@ -37,9 +38,10 @@ class FragSongList : BaseFragmentMainActivity() {
         val adapter = AdapterGenericRecyclerSong(startScoreActivity)
         allSongsList.layoutManager = LinearLayoutManager(context)
         allSongsList.adapter = adapter
+        allSongsList.setThumbEnabled(false)
         viewModel.allSongs.observe(this, Observer { allSongs: List<Song>? -> adapter.submitList(allSongs?.toMutableList())
         })
-        viewModel.getAllSongs(true)
+        viewModel.getAllSongs(sortByNumber)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
@@ -51,8 +53,11 @@ class FragSongList : BaseFragmentMainActivity() {
             R.id.sort -> {
                 if (sortByNumber) {
                     item.setIcon(R.drawable.ic_sort_by_alpha_white_24dp)
+                    allSongsList.setThumbEnabled(true)
+                    allSongsList.setAutoHideEnabled(false)
                 } else {
                     item.setIcon(R.drawable.ic_format_list_numbered_white_24dp)
+                    allSongsList.setThumbEnabled(false)
                 }
                 sortByNumber = !sortByNumber
                 viewModel.getAllSongs(sortByNumber)

@@ -18,7 +18,7 @@ interface SongDAO {
     fun findSongByTrack(track: String): List<Song>
 
     @Query("SELECT * FROM song WHERE song_id=:id LIMIT 1")
-    fun findSongById(id: Int): Song
+    fun findSongById(id: Long): Song
 
     @Query("SELECT * FROM category WHERE parent_category IS NULL ORDER BY category_title")
     fun findMainCategories(): List<Category>

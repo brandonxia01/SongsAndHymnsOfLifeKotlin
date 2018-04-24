@@ -21,7 +21,7 @@ class ViewModelMainActivity : ViewModel() {
     val songInSearch = MutableLiveData<List<Song>>()
     val songNumber = MutableLiveData<List<Song>>()
     val mainCategories = MutableLiveData<List<Category>>()
-    val categories =  MutableLiveData<List<Any>>()
+    val categories = MutableLiveData<MutableMap<Long, List<Any>>>()
 
     companion object {
         fun newInstance(activity: FragmentActivity) = ViewModelProviders.of(activity)[ViewModelMainActivity::class.java]
@@ -32,7 +32,7 @@ class ViewModelMainActivity : ViewModel() {
             try {
                 allSongs.value = repository.getAllSongs(sortByNumber)
             } catch (e: Throwable) {
-                Log.e("error",e.message)
+                Log.e("error", e.message)
             }
         }
     }
@@ -51,7 +51,7 @@ class ViewModelMainActivity : ViewModel() {
 
     fun findMainCategories() {
         launch(UI) {
-            mainCategories.value =  repository.findMainCategories()
+            mainCategories.value = repository.findMainCategories()
         }
     }
 
@@ -66,7 +66,10 @@ class ViewModelMainActivity : ViewModel() {
                     flatList.addAll(map.value)
                 }
             }
-            categories.value = flatList
+            if (categories.value == null) {
+                categories.value = HashMap()
+            }
+            categories.value?.let { it[categoryId] = flatList }
         }
     }
 

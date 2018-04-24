@@ -48,7 +48,7 @@ class FragViewer : Fragment() {
     companion object {
         const val SONG_ID = "Song_Id"
 
-        fun newInstance(songId: Int): FragViewer = FragViewer().apply { arguments = bundleOf(SONG_ID to songId) }
+        fun newInstance(songId: Long): FragViewer = FragViewer().apply { arguments = bundleOf(SONG_ID to songId) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,7 +127,7 @@ class FragViewer : Fragment() {
             if (playerControlView.isVisible) playerControlView.hide() else playerControlView.show()
         }
 
-        arguments?.getInt(SONG_ID)?.let { viewModel.findSongById(it) }
+        arguments?.getLong(SONG_ID)?.let { viewModel.findSongById(it) }
     }
 
     private fun getLocalBitmapUri(context: Context, bmp: Bitmap): Uri? {

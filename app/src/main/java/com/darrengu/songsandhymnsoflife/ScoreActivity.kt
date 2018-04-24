@@ -13,7 +13,7 @@ class ScoreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_score)
-        val viewerFragment = FragViewer.newInstance(intent.getIntExtra(FragViewer.SONG_ID, 0))
+        val viewerFragment = FragViewer.newInstance(intent.getLongExtra(FragViewer.SONG_ID, 0))
         supportFragmentManager.beginTransaction()
                 .add(R.id.scoreContainer, viewerFragment)
                 .commit()

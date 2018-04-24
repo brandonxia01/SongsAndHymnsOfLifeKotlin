@@ -43,9 +43,11 @@ class DataRepository {
 
 
                 dao.batchInsertCategories(categories)
+                val random = Random()
+                for (index in 0..500) {
+                    val char = random.nextInt(26) + 'a'.toInt()
 
-                for (index in 0..5) {
-                    val song = Song(trackNumber = (index + 1).toString(), title = "title$index", songId = index.toLong())
+                    val song = Song(trackNumber = (index + 1).toString(), title = "${char.toChar()}title$index", songId = index.toLong(), subIndex = "${char.toChar()}title$index")
                     val postfix = String.format("%04d", index)
                     song.urlScore = "http://shengmingshige.net/blog/wp-content/gallery/c-png/cu-$postfix.png"
                     songs.add(song)
@@ -79,7 +81,7 @@ class DataRepository {
 
     suspend fun findSongByTrack(track: String): List<Song> = async { dao.findSongByTrack("$track%").distinctBy { it.songId }}.await()
 
-    suspend fun findSongById(songId: Int): Song? = async { dao.findSongById(songId) }.await()
+    suspend fun findSongById(songId: Long): Song? = async { dao.findSongById(songId) }.await()
 
     suspend fun findMainCategories(): List<Category> = async { dao.findMainCategories() }.await()
 

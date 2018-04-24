@@ -41,7 +41,7 @@ class FragCategoryViewPager : BaseFragmentMainActivity() {
         categoryList.layoutManager = LinearLayoutManager(context)
 
         viewModel.categories.observe(this, Observer {
-            it?.let {
+            it?.get(categoryId)?.let {
                 categoryList.adapter = AdapterPagerCategory(it) {
                     Log.d("onClickSong", it.toString())
                 }
