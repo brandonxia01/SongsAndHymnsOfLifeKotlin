@@ -10,6 +10,9 @@ import android.view.ViewGroup
 import com.darrengu.songsandhymnsoflife.R
 import com.darrengu.songsandhymnsoflife.adapter.AdapterPagerCategory
 import kotlinx.android.synthetic.main.fragment_category_pager.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.bundleOf
 
 /**
@@ -27,6 +30,7 @@ class FragCategoryViewPager : BaseFragmentMainActivity() {
     }
 
     private var categoryId: Long? = null
+    private var flatList: List<Any> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +44,18 @@ class FragCategoryViewPager : BaseFragmentMainActivity() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         categoryList.layoutManager = LinearLayoutManager(context)
 
-        viewModel.categories.observe(this, Observer {
-            it?.get(categoryId)?.let {
-                categoryList.adapter = AdapterPagerCategory(it) {
-                    Log.d("onClickSong", it.toString())
+        launch(UI) {
+            if (flatList.isEmpty()) {
+                categoryId?.let {
+                    flatList = async {
+                        viewModel.findSongsInCategory(it)
+                    }.await()
                 }
             }
-            Log.d("result", it?.size.toString())
-        })
-
-        categoryId?.let { viewModel.findSongsInCategory(it) }
+            categoryList.adapter = AdapterPagerCategory(flatList) {
+                Log.d("onClickSong", it.toString())
+            }
+        }
 
     }
 }

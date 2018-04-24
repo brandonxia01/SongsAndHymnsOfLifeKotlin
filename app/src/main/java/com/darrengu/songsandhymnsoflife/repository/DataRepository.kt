@@ -1,5 +1,6 @@
 package com.darrengu.songsandhymnsoflife.repository
 
+import android.arch.lifecycle.LiveData
 import android.content.Context
 import android.util.Log
 import com.darrengu.songsandhymnsoflife.SongApplication
@@ -47,7 +48,7 @@ class DataRepository {
                 for (index in 0..500) {
                     val char = random.nextInt(26) + 'a'.toInt()
 
-                    val song = Song(trackNumber = (index + 1).toString(), title = "${char.toChar()}title$index", songId = index.toLong(), subIndex = "${char.toChar()}title$index")
+                    val song = Song(trackNumber = (index + 1).toLong(), title = "${char.toChar()}title$index", songId = index.toLong(), subIndex = "${char.toChar()}title$index")
                     val postfix = String.format("%04d", index)
                     song.urlScore = "http://shengmingshige.net/blog/wp-content/gallery/c-png/cu-$postfix.png"
                     songs.add(song)
@@ -85,5 +86,5 @@ class DataRepository {
 
     suspend fun findMainCategories(): List<Category> = async { dao.findMainCategories() }.await()
 
-    suspend fun findSongsInCategory(id: Long): List<SongCategory> = async { dao.findSongInCategory(id) }.await()
+    fun findSongsInCategory(id: Long): List<SongCategory> = dao.findSongInCategory(id)
 }

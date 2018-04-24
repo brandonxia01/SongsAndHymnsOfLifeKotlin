@@ -1,13 +1,12 @@
 package com.darrengu.songsandhymnsoflife.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProviders
+import android.arch.lifecycle.*
 import android.support.v4.app.FragmentActivity
 import android.util.Log
 import com.darrengu.songsandhymnsoflife.model.*
 import com.darrengu.songsandhymnsoflife.repository.DataRepository
 import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
 
@@ -21,7 +20,6 @@ class ViewModelMainActivity : ViewModel() {
     val songInSearch = MutableLiveData<List<Song>>()
     val songNumber = MutableLiveData<List<Song>>()
     val mainCategories = MutableLiveData<List<Category>>()
-    val categories = MutableLiveData<MutableMap<Long, List<Any>>>()
 
     companion object {
         fun newInstance(activity: FragmentActivity) = ViewModelProviders.of(activity)[ViewModelMainActivity::class.java]
@@ -55,22 +53,16 @@ class ViewModelMainActivity : ViewModel() {
         }
     }
 
-    fun findSongsInCategory(categoryId: Long) {
-        launch(UI) {
-            val songCategory = repository.findSongsInCategory(categoryId)
-            val group = songCategory.groupBy({ it.category.categoryTitle }, { it.song })
-            val flatList = mutableListOf<Any>()
-            group.map { map ->
-                map.key?.let {
-                    flatList.add(it)
-                    flatList.addAll(map.value)
-                }
+    fun findSongsInCategory(categoryId: Long): List<Any> {
+        val songCategory = repository.findSongsInCategory(categoryId)
+        val group = songCategory.groupBy({ it.category.categoryTitle }, { it.song })
+        val flatList = mutableListOf<Any>()
+        group.map { map ->
+            map.key?.let {
+                flatList.add(it)
+                flatList.addAll(map.value)
             }
-            if (categories.value == null) {
-                categories.value = HashMap()
-            }
-            categories.value?.let { it[categoryId] = flatList }
         }
+        return flatList
     }
-
 }

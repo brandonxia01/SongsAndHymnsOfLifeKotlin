@@ -18,7 +18,7 @@ class ViewHolderGenericSong(override val containerView: View, private val onClic
     }
     fun bind(song: Song) {
         displayingSong = song
-        songTrack.text = song.trackNumber
+        songTrack.text = song.trackNumber.toString()
         songTitle.text = song.title
     }
 }

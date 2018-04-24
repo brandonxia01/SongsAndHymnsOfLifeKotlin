@@ -39,8 +39,8 @@ class FragSongList : BaseFragmentMainActivity() {
         allSongsList.layoutManager = LinearLayoutManager(context)
         allSongsList.adapter = adapter
         allSongsList.setThumbEnabled(false)
-        viewModel.allSongs.observe(this, Observer { allSongs: List<Song>? -> adapter.submitList(allSongs?.toMutableList())
-        })
+        viewModel.allSongs.observe(this,
+                Observer { allSongs: List<Song>? -> adapter.submitList(allSongs?.toMutableList()) })
         viewModel.getAllSongs(sortByNumber)
     }
 

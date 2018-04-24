@@ -14,7 +14,7 @@ data class Song(
         @ColumnInfo(name = "song_id")
         var songId: Long,
         @ColumnInfo(name = "track_number")
-        var trackNumber: String?,
+        var trackNumber: Long?,
         @ColumnInfo(name = "title")
         var title: String?,
         @ColumnInfo(name = "language")
