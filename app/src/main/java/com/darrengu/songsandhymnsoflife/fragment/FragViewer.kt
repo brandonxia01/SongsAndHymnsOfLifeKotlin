@@ -26,12 +26,12 @@ import kotlinx.android.synthetic.main.custom_playback_control_view.*
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.support.v4.content.FileProvider
 import android.util.Log
 import android.widget.ImageButton
 import com.squareup.picasso.Target
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.lang.Exception
 
 
@@ -41,7 +41,6 @@ import java.lang.Exception
 class FragViewer : Fragment() {
     private lateinit var viewModel: ViewModelScoreActivity
     var exoPlayer: ExoPlayer? = null
-    var song: Song? = null
     var displayingBitmap: Bitmap? = null
     var scoreMode = true
 
@@ -65,11 +64,11 @@ class FragViewer : Fragment() {
         exoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
         val dataSourceFactory = DefaultDataSourceFactory(view.context, Util.getUserAgent(context, getString(R.string.app_name)))
         playerControlView.player = exoPlayer
-        val target = object: Target {
+        val target = object : Target {
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
 
             override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-                Log.d("picasso", "asdf")
+                Log.e("picasso", e.toString())
             }
 
             override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
@@ -90,23 +89,36 @@ class FragViewer : Fragment() {
                     flipButton.visibility = View.VISIBLE
                 }
 
-                val mediaSource = ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse("http://www.sample-videos.com/audio/mp3/crowd-cheering.mp3"))
+                val mediaSource = ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse("https://www.sample-videos.com/audio/mp3/wave.mp3"))
                 exoPlayer?.prepare(mediaSource)
                 exoPlayer?.playWhenReady = false
             }
         })
 
         shareButton.setOnClickListener { view ->
-            displayingBitmap?.let {
-                val shareIntent = Intent(Intent.ACTION_SEND)
-                shareIntent.type = "image/jpg"
-                shareIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(view.context, it))
-                startActivity(Intent.createChooser(shareIntent, "Share image using"))
+            displayingBitmap?.let { bitmap ->
+                val file1 = File(view.context.getExternalFilesDir(null), "images")
+                if (!file1.mkdirs()) {
+                    Log.e("bitmap saving", "Directory not created")
+                }
+                val file = File(file1, "${viewModel.song.value?.trackNumber}.png")
+                Log.d("file", file.exists().toString())
+
+                FileOutputStream(file).use { bitmap.compress(Bitmap.CompressFormat.PNG, 90, it) }
+                Log.d("file output", file.exists().toString())
+                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    val uri = FileProvider.getUriForFile(view.context, "com.darrengu.fileprovider", file)
+                    setDataAndType(uri, "image/png")
+                }
+                if (activity?.packageManager?.let { shareIntent.resolveActivity(it) } != null) {
+                    startActivity(shareIntent)
+                }
             }
         }
 
         flipButton.setOnClickListener {
-            if (song?.lyrics?.isNotEmpty() == true) {
+            if (viewModel.song.value?.lyrics?.isNotEmpty() == true) {
                 if (scoreMode) {
                     photoView.visibility = View.GONE
                     scrollView.visibility = View.VISIBLE
@@ -128,17 +140,5 @@ class FragViewer : Fragment() {
         }
 
         arguments?.getLong(SONG_ID)?.let { viewModel.findSongById(it) }
-    }
-
-    private fun getLocalBitmapUri(context: Context, bmp: Bitmap): Uri? {
-        var bmpUri: Uri? = null
-        try {
-            val file = File(context.filesDir, "songs${song?.trackNumber}.png")
-            FileOutputStream(file).use { bmp.compress(Bitmap.CompressFormat.PNG, 90, it) }
-            bmpUri = Uri.fromFile(file)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return bmpUri
     }
 }

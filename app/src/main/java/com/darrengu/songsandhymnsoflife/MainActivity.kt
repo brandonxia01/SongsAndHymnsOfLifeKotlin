@@ -9,14 +9,12 @@ import com.darrengu.songsandhymnsoflife.fragment.FragCategory
 import com.darrengu.songsandhymnsoflife.fragment.FragNumber
 import com.darrengu.songsandhymnsoflife.fragment.FragSearch
 import com.darrengu.songsandhymnsoflife.fragment.FragSongList
-import com.idescout.sql.SqlScoutServer
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        SqlScoutServer.create(this, packageName)
         setContentView(R.layout.activity_main)
         val fragNumber = FragNumber()
         val fragSearch = FragSearch()

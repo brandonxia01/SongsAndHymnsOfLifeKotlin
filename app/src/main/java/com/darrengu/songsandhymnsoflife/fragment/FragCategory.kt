@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.fragment_category.*
  * Created by darren.gu on 3/8/18.
  */
 class FragCategory : BaseFragmentMainActivity() {
-    var adapter: PageAdapterCategory? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_category, container, false)

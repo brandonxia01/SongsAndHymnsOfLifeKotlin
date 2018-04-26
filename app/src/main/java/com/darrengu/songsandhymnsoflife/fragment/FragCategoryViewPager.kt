@@ -52,10 +52,7 @@ class FragCategoryViewPager : BaseFragmentMainActivity() {
                     }.await()
                 }
             }
-            categoryList.adapter = AdapterPagerCategory(flatList) {
-                Log.d("onClickSong", it.toString())
-            }
+            categoryList.adapter = AdapterPagerCategory(flatList) { startScoreActivity(it) }
         }
-
     }
 }

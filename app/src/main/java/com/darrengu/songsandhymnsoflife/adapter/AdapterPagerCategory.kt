@@ -1,16 +1,12 @@
 package com.darrengu.songsandhymnsoflife.adapter
 
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.darrengu.songsandhymnsoflife.R
-import com.darrengu.songsandhymnsoflife.model.Category
-import com.darrengu.songsandhymnsoflife.model.CategoryWithSongs
 import com.darrengu.songsandhymnsoflife.model.Song
-import java.util.*
+import com.darrengu.songsandhymnsoflife.viewholder.ViewHolderCategory
+import com.darrengu.songsandhymnsoflife.viewholder.ViewHolderGenericSong
 
 class AdapterPagerCategory(var dataset: List<Any>, private val onClickListener: (Long) -> Unit)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

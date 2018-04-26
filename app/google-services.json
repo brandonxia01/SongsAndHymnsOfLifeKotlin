@@ -1,0 +1,92 @@
+{
+  "project_info": {
+    "project_number": "99661784881",
+    "firebase_url": "https://hymns-ddf3d.firebaseio.com",
+    "project_id": "hymns-ddf3d",
+    "storage_bucket": "hymns-ddf3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99661784881:android:44fc84079279c671",
+        "android_client_info": {
+          "package_name": "com.church.psalm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99661784881-pfjrhp2qje8bfi91sn33285l6fb8fpoi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.church.psalm",
+            "certificate_hash": "bbd10f633245179e79f70d2fec086e1c5221e1ee"
+          }
+        },
+        {
+          "client_id": "99661784881-luodraqg5nefr1rlu942f38da317lr6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB28YG4SeqI_a6H7rgFlvwu42BTAXUfJPM"
+        },
+        {
+          "current_key": "AIzaSyAbgpkZkfwQYxTgEt1eecwoJhl0mOCtRlo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99661784881-luodraqg5nefr1rlu942f38da317lr6t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99661784881:android:8168d7f113adb2ea",
+        "android_client_info": {
+          "package_name": "com.darrengu.songsandhymnsoflife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99661784881-luodraqg5nefr1rlu942f38da317lr6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB28YG4SeqI_a6H7rgFlvwu42BTAXUfJPM"
+        },
+        {
+          "current_key": "AIzaSyAbgpkZkfwQYxTgEt1eecwoJhl0mOCtRlo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

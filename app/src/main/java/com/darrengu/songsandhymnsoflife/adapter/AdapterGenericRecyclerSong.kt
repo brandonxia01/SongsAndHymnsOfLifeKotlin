@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.darrengu.songsandhymnsoflife.R
 import com.darrengu.songsandhymnsoflife.model.Song
+import com.darrengu.songsandhymnsoflife.viewholder.ViewHolderGenericSong
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 
 /**
