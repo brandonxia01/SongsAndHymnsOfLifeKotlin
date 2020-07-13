@@ -1,10 +1,11 @@
 package com.darrengu.songsandhymnsoflife.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.darrengu.songsandhymnsoflife.model.Song
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.adapter_item_song.*
+import kotlinx.android.synthetic.main.adapter_item_song.songTitle
+import kotlinx.android.synthetic.main.adapter_item_song.songTrack
 
 /**
  * Created by darren.gu on 3/5/18.

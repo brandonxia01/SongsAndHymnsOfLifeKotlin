@@ -1,10 +1,8 @@
 package com.darrengu.songsandhymnsoflife
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.darrengu.songsandhymnsoflife.fragment.FragNumber
 import com.darrengu.songsandhymnsoflife.fragment.FragSearch
 import com.darrengu.songsandhymnsoflife.fragment.FragSongList

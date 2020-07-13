@@ -10,33 +10,41 @@
       "properties": [
         {
           "id": "1:959391057324424572",
-          "name": "id"
+          "name": "id",
+          "type": 6,
+          "flags": 1
         },
         {
           "id": "2:2646088989905564265",
-          "name": "title"
+          "name": "title",
+          "type": 9
         },
         {
           "id": "3:4050764930101469233",
-          "name": "trackNumber"
+          "name": "trackNumber",
+          "type": 9
         },
         {
           "id": "4:6589940651080513978",
-          "name": "language"
+          "name": "language",
+          "type": 9
         },
         {
           "id": "5:7214372844242121572",
-          "name": "url"
+          "name": "url",
+          "type": 9
         },
         {
           "id": "6:2930896276435016036",
-          "name": "subIndex"
+          "name": "subIndex",
+          "type": 9
         }
       ],
       "relations": [
         {
           "id": "1:7128303689296707279",
-          "name": "categories"
+          "name": "categories",
+          "targetId": "2:8854307334176132169"
         }
       ]
     },
@@ -47,11 +55,14 @@
       "properties": [
         {
           "id": "1:6417859628097920493",
-          "name": "id"
+          "name": "id",
+          "type": 6,
+          "flags": 1
         },
         {
           "id": "3:6022897399332550689",
-          "name": "categoryTitle"
+          "name": "categoryTitle",
+          "type": 9
         }
       ],
       "relations": []
@@ -61,8 +72,8 @@
   "lastIndexId": "0:0",
   "lastRelationId": "1:7128303689296707279",
   "lastSequenceId": "0:0",
-  "modelVersion": 4,
-  "modelVersionParserMinimum": 4,
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
   "retiredPropertyUids": [

@@ -1,7 +1,7 @@
 package com.darrengu.songsandhymnsoflife.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.darrengu.songsandhymnsoflife.ScoreActivity
 import com.darrengu.songsandhymnsoflife.viewmodel.ViewModelMainActivity
 import org.jetbrains.anko.startActivity
@@ -15,6 +15,6 @@ open class BaseFragmentMainActivity : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelMainActivity.newInstance(activity!!)
+        viewModel = ViewModelMainActivity.newInstance(requireActivity())
     }
 }

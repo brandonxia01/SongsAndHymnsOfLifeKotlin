@@ -1,19 +1,31 @@
 package com.darrengu.songsandhymnsoflife.fragment
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.darrengu.songsandhymnsoflife.R
 import com.darrengu.songsandhymnsoflife.adapter.AdapterGenericRecyclerSong
-import com.darrengu.songsandhymnsoflife.viewmodel.ViewModelMainActivity
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_number.*
+import kotlinx.android.synthetic.main.fragment_number.backspace
+import kotlinx.android.synthetic.main.fragment_number.enter
+import kotlinx.android.synthetic.main.fragment_number.inputText
+import kotlinx.android.synthetic.main.fragment_number.num0
+import kotlinx.android.synthetic.main.fragment_number.num1
+import kotlinx.android.synthetic.main.fragment_number.num2
+import kotlinx.android.synthetic.main.fragment_number.num3
+import kotlinx.android.synthetic.main.fragment_number.num4
+import kotlinx.android.synthetic.main.fragment_number.num5
+import kotlinx.android.synthetic.main.fragment_number.num6
+import kotlinx.android.synthetic.main.fragment_number.num7
+import kotlinx.android.synthetic.main.fragment_number.num8
+import kotlinx.android.synthetic.main.fragment_number.num9
+import kotlinx.android.synthetic.main.fragment_number.previewList
+import kotlinx.android.synthetic.main.fragment_number.summaryText
 import org.jetbrains.anko.toast
 
 /**
@@ -35,7 +47,7 @@ class FragNumber : BaseFragmentMainActivity() {
         previewList.layoutManager = LinearLayoutManager(context)
         val adapter = AdapterGenericRecyclerSong(startScoreActivity)
         previewList.adapter = adapter
-        viewModel.songNumber.observe(this, Observer { previewSongs -> previewSongs?.let {
+        viewModel.songNumber.observe(viewLifecycleOwner, Observer { previewSongs -> previewSongs?.let {
             summaryText.text = "${it.size} songs in total"
             adapter.dataSet = it.toMutableList()
         }})

@@ -1,20 +1,19 @@
 package com.darrengu.songsandhymnsoflife.fragment
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.content.res.AppCompatResources
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.darrengu.songsandhymnsoflife.R
 import com.darrengu.songsandhymnsoflife.adapter.AdapterGenericRecyclerSong
 import com.darrengu.songsandhymnsoflife.model.Song
-import com.darrengu.songsandhymnsoflife.viewmodel.ViewModelMainActivity
-import kotlinx.android.synthetic.main.fragment_songlist.*
-import kotlinx.android.synthetic.main.fragment_songlist.view.*
+import kotlinx.android.synthetic.main.fragment_songlist.allSongsList
+import kotlinx.android.synthetic.main.fragment_songlist.view.toolbarList
 
 /**
  * Created by darren.gu on 3/4/18.
@@ -35,9 +34,9 @@ class FragSongList : BaseFragmentMainActivity() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val adapter = AdapterGenericRecyclerSong(startScoreActivity)
-        allSongsList.layoutManager = LinearLayoutManager(context)
+        allSongsList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         allSongsList.adapter = adapter
-        viewModel.allSongs.observe(this, Observer { allSongs: List<Song>? ->
+        viewModel.allSongs.observe(viewLifecycleOwner, Observer { allSongs: List<Song>? ->
             run {
                 adapter.dataSet.clear()
                 allSongs?.let { adapter.dataSet = it.toMutableList() }
@@ -46,15 +45,15 @@ class FragSongList : BaseFragmentMainActivity() {
         viewModel.getAllSongs(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_sort, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (sortByNumber) {
-            item?.setIcon(R.drawable.ic_sort_by_alpha_white_24dp)
+            item.setIcon(R.drawable.ic_sort_by_alpha_white_24dp)
         } else {
-            item?.setIcon(R.drawable.ic_format_list_numbered_white_24dp)
+            item.setIcon(R.drawable.ic_format_list_numbered_white_24dp)
         }
         sortByNumber = !sortByNumber
         viewModel.getAllSongs(sortByNumber)

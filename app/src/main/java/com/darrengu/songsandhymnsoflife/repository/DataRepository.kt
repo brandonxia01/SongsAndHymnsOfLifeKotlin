@@ -5,7 +5,7 @@ import com.darrengu.songsandhymnsoflife.SongApplication
 import com.darrengu.songsandhymnsoflife.model.Category
 import com.darrengu.songsandhymnsoflife.model.Song
 import com.darrengu.songsandhymnsoflife.model.Song_
-import java.util.*
+import java.util.Random
 
 /**
  * Created by darren.gu on 3/4/18.

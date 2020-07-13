@@ -1,24 +1,23 @@
 package com.darrengu.songsandhymnsoflife.fragment
 
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.darrengu.songsandhymnsoflife.R
 import com.darrengu.songsandhymnsoflife.adapter.AdapterGenericRecyclerSong
 import com.darrengu.songsandhymnsoflife.model.Song
-import com.darrengu.songsandhymnsoflife.viewmodel.ViewModelMainActivity
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.fragment_search.*
-import java.util.concurrent.TimeUnit
-import android.view.inputmethod.InputMethodManager
 import io.reactivex.disposables.Disposable
-
+import kotlinx.android.synthetic.main.fragment_search.searchInput
+import kotlinx.android.synthetic.main.fragment_search.searchResults
+import kotlinx.android.synthetic.main.fragment_search.summaryText
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by darren.gu on 3/4/18.
@@ -37,7 +36,7 @@ class FragSearch : BaseFragmentMainActivity() {
         val adapter = AdapterGenericRecyclerSong(startScoreActivity)
         searchResults.layoutManager = LinearLayoutManager(context)
         searchResults.adapter = adapter
-        viewModel.songInSearch.observe(this,
+        viewModel.songInSearch.observe(viewLifecycleOwner,
                 Observer { results: List<Song>? -> results?.let {
                     summaryText.text = "${it.size} songs in total"
                     adapter.dataSet = it.toMutableList()
